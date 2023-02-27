@@ -1,0 +1,6 @@
+[*]
+@injected/**
+@isomorphic/**
+@web/**
+../entries.ts
+../geometry.ts
