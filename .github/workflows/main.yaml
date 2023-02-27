@@ -1,24 +1,31 @@
 name: playwright-test
-on: [push]
+on: 
+    workflow_call:
 
 jobs:
   tests_e2e_playwright:
     name: Run end-to-end tests with playwright
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: thomasgoldberger/playwright
+          path: main
 
       - name: Install dependencies
-        run: |
-             npm ci
+        run: npm ci
+        working-directory: main
+
       
       - name: Install playwright
         run: |
             npm install -D @playwright/test
             npx playwright install --with-deps
-        
+        working-directory: main
+
+
       - name: Run tests
-        run: |
-            ls -a
-            npx playwright test
+        run: npx playwright test
+        working-directory: main
